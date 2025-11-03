@@ -1,0 +1,139 @@
+DEVSECOPS COMPLETE WITH SONARQUBE AND OWASP DEPENDECY CHECK -- CAN ADD TRIVY SCAN FOR DOCKER IMAGE
+-------------------------------------------------------------------------------------------------------
+ALL COMMANDS BELOW ARE IMPORTANT
+
+
+
+sudo -i 
+apt update
+apt install maven -y
+
+ install jenkins 
+ -------------
+ sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt update
+sudo apt install jenkins
+===================================
+
+
+
+INSTALL DOCKER AND SOANRQUBE
+----------------------------
+--- Docker Installation ---
+
+sudo apt-get update
+sudo apt-get install ca-certificates curl gnupg
+
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+sudo apt install docker-compose
+
+service docker restart
+sudo usermod -aG docker $USER
+newgrp docker
+sudo chmod 666 /var/run/docker.sock
+sudo systemctl restart docker
+
+
+# TO ISNTALL SONARQUBE USING DOCKER RUN BELOW COMMAND  
+docker run -d --name sonar -p 9000:9000 sonarqube:lts-community
+
+---------------------------------------------------------------------
+
+sudo visudo
+jenkins ALL=(ALL) NOPASSWD: ALL
+
+-----------------------------
+
+OPTIONAL CHECK TOMCAT VERSIONS AND REPLACE
+
+ sudo chown -R jenkins:jenkins /opt/apache-tomcat-10.1.48/webapps
+  sudo chmod -R 755 /opt/apache-tomcat-10.1.48/webapps
+
+-----------------------------------------------------------
+MAKE SURE TO INSTALL PLUGINS IN JENKINS
+SONAR SCANNER
+OWASP DEPENDECY CHECKER
+HTML PUBLISHER
+----------------------------------------------
+CONFIGURE JENKINS  GOT TO TOOLS IN MANAGE JANEKINS CONFIGURE SONAR SCANNER AND OWASP DEOEDENCY CHECKER
+AND ASLO ADD SONAR SERVER IN SYSTEM CONFIGURE GLOBAL TOOLS  
+GIVE SONAR SERVER URL AND SONAR TOKEN
+--HOW TO GENERATE TOKE GOT OT SONARQUBE -->Administration --> SECURITY -->USERS ---> CLICK ON TOKEN AND GIVE NAME AND GENERATE
+--OPTIONAL WEBHOOKS
+TO ADD JENKINS SERVER IN SONARQUBE 
+Administration-->CONFIGURATION--> WEBHOOKS -- URL SHOULD BE LIKE 
+⚙️ How to Set It Up
+
+Go to SonarQube → Administration → Configuration → Webhooks
+
+Click Create
+Name: Jenkins
+URL:
+http://3.141.166.235:8080/sonarqube-webhook/
+Save
+----------------------------------------------------------------------
+
+✅ Step-by-Step Fix
+1️⃣ Verify OWASP Dependency-Check plugin in SonarQube
+Go to:
+ 👉 http://3.141.166.235:9000/admin/marketplace
+ Search for:
+“Dependency-Check” or “OWASP Dependency-Check”
+---------------------------------------------------------
+
+
+=================================
+    1  docker run -d --name sonar -p 9000:9000 sonarqube:lts-community
+    2  cat /var/lib/jenkins/secrets/initialAdminPassword
+    3  cd /opt/
+    4  ls
+    5  sudo chown -R jenkins:jenkins /opt/apache-tomcat-9.0.111/webapps 
+    6  sudo chmod -R 755 /opt/apache-tomcat-9.0.111/webapps 
+    7  cd apache-tomcat-9.0.111/
+    8  ls
+    9  cd conf/
+   10  ls
+   11  vi tomcat-users.xml 
+   12  cd
+   13  sudo visudo
+   14  Y
+   15  curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+   16  sudo apt install -y nodejs
+   17  node -v
+   18  npm -v
+   19  df -h
+   20  # If Node.js is already installed:
+   21  sudo npm install -g yarn
+   22  # Verify it works:
+   23  yarn -v
+   24  sudo npm install -g yarn
+   25  sudo usermod -aG docker jenkins
+   26  sudo systemctl restart jenkins
+   27  sudo apt update
+   28  sudo apt install -y wget gnupg2
+   29  wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+   30  echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+   31  sudo apt update
+   32  sudo apt install -y google-chrome-stable
+   33  docker ps
+   34  docker ps -a
+   35  history
+root@ip-172-31-44-202:~# 
+--------------------------------------------------------------------------------------------------------------
+
