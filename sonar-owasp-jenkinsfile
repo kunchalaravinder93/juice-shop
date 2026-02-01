@@ -4,7 +4,7 @@ pipeline {
     environment {
         // SonarQube settings
         SCANNER_HOME = tool 'sonar-scanner'
-        SONAR_URL = 'http://3.141.166.235:9000'
+        SONAR_URL = 'http://18.191.3.152:9000'
         SONAR_PROJECT_KEY = 'juice-shop'
         SONAR_PROJECT_NAME = 'OWASP-Juice-Shop'
         SONAR_TOKEN = credentials('sonar-token')
