@@ -71,7 +71,7 @@ SONAR SCANNER
 OWASP DEPENDECY CHECKER
 HTML PUBLISHER
 ----------------------------------------------
-CONFIGURE JENKINS  GOT TO TOOLS IN MANAGE JANEKINS CONFIGURE SONAR SCANNER AND OWASP DEOEDENCY CHECKER
+CONFIGURE JENKINS  GOT TO TOOLS IN MANAGE JANEKINS CONFIGURE SONAR SCANNER AND OWASP DEOEDENCY CHECKER [add github owasp install while setting this in tools]
 AND ASLO ADD SONAR SERVER IN SYSTEM CONFIGURE GLOBAL TOOLS  
 GIVE SONAR SERVER URL AND SONAR TOKEN
 --HOW TO GENERATE TOKE GOT OT SONARQUBE -->Administration --> SECURITY -->USERS ---> CLICK ON TOKEN AND GIVE NAME AND GENERATE
@@ -97,7 +97,7 @@ Go to:
 “Dependency-Check” or “OWASP Dependency-Check”
 ---------------------------------------------------------
 
-
+FOLLOW THIS STEPS VERY IMPORTANT
 =================================
     1  docker run -d --name sonar -p 9000:9000 sonarqube:lts-community
     2  cat /var/lib/jenkins/secrets/initialAdminPassword
