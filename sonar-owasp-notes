@@ -137,3 +137,14 @@ FOLLOW THIS STEPS VERY IMPORTANT
 root@ip-172-31-44-202:~# 
 --------------------------------------------------------------------------------------------------------------
 
+echo "[7/10] Installing Apache JMeter 5.6.3..."
+JMETER_VERSION="5.6.3"
+JMETER_URL="https://downloads.apache.org/jmeter/binaries/apache-jmeter-${JMETER_VERSION}.tgz"
+cd /tmp
+wget -q "${JMETER_URL}" -O jmeter.tgz
+sudo tar -xzf jmeter.tgz -C /opt/
+sudo mv /opt/apache-jmeter-${JMETER_VERSION} /opt/apache-jmeter
+sudo chmod +x /opt/apache-jmeter/bin/jmeter
+sudo ln -sf /opt/apache-jmeter/bin/jmeter /usr/local/bin/jmeter
+echo "JMeter: $(jmeter --version 2>&1 | head -1)"
+
